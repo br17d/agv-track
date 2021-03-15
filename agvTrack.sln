@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "agvTrack", "agvTrack.pyproj", "{86CF42A8-EDBE-42EC-A32E-4D1BC9274B4E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86CF42A8-EDBE-42EC-A32E-4D1BC9274B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86CF42A8-EDBE-42EC-A32E-4D1BC9274B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F390DEB2-D953-4016-B453-152B0FA48A89}
+	EndGlobalSection
+EndGlobal
