@@ -5,6 +5,15 @@ import imutils
 import time
 import cv2
 import sys
+import matplotlib.pyplot as plt
+import numpy as np
+import time
+import openpyxl as xl
+
+xHistory = []
+yHistory = []
+iHistory = []
+
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -52,7 +61,7 @@ arucoParams = cv2.aruco.DetectorParameters_create()
 print("[INFO] starting video stream...")
 vs = VideoStream(src=0).start()
 time.sleep(2.0)
-
+i = 0
 # loop over the frames from the video stream
 while True:
 	# grab the frame from the threaded video stream and resize it
@@ -91,6 +100,10 @@ while True:
 			cY = int((topLeft[1] + bottomRight[1]) / 2.0)
 			#Put x and y into array
 			cGrid = [cX, cY]
+			xHistory.append(cX)
+			yHistory.append(cY)
+			iHistory.append(i)
+			i = i + 1
 			cv2.circle(frame, (cX, cY), 4, (0, 0, 255), -1)
 			# draw the ArUco marker ID on the frame
 			cv2.putText(frame, str(cGrid),
@@ -103,6 +116,52 @@ while True:
 	# if the `q` key was pressed, break from the loop
 	if key == ord("q"):
 		break
+	
 # do a bit of cleanup
 cv2.destroyAllWindows()
 vs.stop()
+
+plt.subplot(2, 1, 1)
+plt.scatter(iHistory, xHistory)
+plt.title("X-Coordinates Over Time")
+plt.xlabel("Time (frames)")
+plt.ylabel("Y-Coordinates (pixels)")
+
+plt.subplot(2,1,2)
+plt.scatter(iHistory, yHistory)
+plt.title("Y-Coordinates Over Time")
+plt.xlabel("Time (frames)")
+plt.ylabel("X-Coordinates (pixels)")
+plt.show()
+
+#Write iHistory, xHistory, and yHistory to .txt file
+
+#data = open("Output_Data.txt", "wt")
+
+#data.write(str(iHistory) + "\n" + str(xHistory) + "\n" + str(yHistory) + "\n")
+
+
+wb = xl.Workbook()
+
+wb.save(filename='outputVals.xlsx')
+
+iSheet = wb.create_sheet("iVals")
+xSheet = wb.create_sheet("xVals")
+ySheet = wb.create_sheet("yVals")
+iSize = len(iHistory)
+for x in range(1,iSize):
+	iSheet.cell(row=x, column=1)
+	xSheet.cell(row=x, column=1)
+	ySheet.cell(row=x, column=1)
+
+
+
+for x in range(1,(iSize-1)):
+	iSheet['A'+ str(x)] = iHistory[x]
+	xSheet['A'+ str(x)] = xHistory[x]
+	ySheet['A'+ str(x)] = yHistory[x]
+wb.save('outputVals.xlsx')
+
+
+print("Editing complete. Press q to exit\n")
+
